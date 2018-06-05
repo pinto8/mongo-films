@@ -10,13 +10,18 @@ router
   .get((req, res) => {
     const { gender, height } = req.query;
     let query = Character.find()
-    console.log('height', height);
-    if (gender !== undefined) {
+    if (gender !== undefined && height === undefined) {
         query.where({ gender: gender })
             .then( chars => res.json(chars))
             .catch( err => res.status(500).json({ error: 'Error getting chars from database', err}))
+    }
+    if (height !== undefined) {
+        query.gt({ height: height})
+            .then( chars => res.json(chars))
+            .catch( err => res.status(500).json({ error: 'Error getting chars from database', err}))
     } else {
-        query.then( chars => res.json(chars))
+        query.then( chars => res.status(200).json(chars))
+            .catch( err => res.status(500).json({ error: 'Error getting chars from database', err}))
     }
 });
 
@@ -46,7 +51,6 @@ router
       const { id } = req.params;
       let char = Character.findById(id)
       let query = Vehicle.find()
-      console.log('Q', query);
       query.where({ pilots: char })
         .then( vehicles => {
           if (vehicles !== null) {
