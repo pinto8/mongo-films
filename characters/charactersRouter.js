@@ -25,7 +25,6 @@ router
     }
 });
 
-
 router
     .route('/:id')
     .get((req, res) => {
@@ -49,8 +48,7 @@ router
     .route('/:id/vehicles')
     .get((req, res) => {
       const { id } = req.params;
-      // let char = Character.findById(id)
-      let query = Vehicle.find({ pilots: id })
+      Vehicle.find({ pilots: id })
         .then(vehicles => {
           if (vehicles !== null) {
             res.status(200).json(vehicles);
