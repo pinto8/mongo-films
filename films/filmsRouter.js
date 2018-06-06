@@ -11,13 +11,28 @@ router
   .get((req, res) => {
     Film.find()
       .then( films => {
-        console.log(films);
+        console.log(Film);
         res.status(200).json(films);
       })
       .catch( err => {
         res.status(500).json({ error: 'Error getting films', err});
       })
     })
+  
+  .post((req, res) => {
+    const filmData = req.body;
+    const { title } = req.body.title;
+    const film = new Film(filmData);
+    film.save()
+      .then( film => {
+        res.status(201).json(film);
+      })
+      .catch( err => {
+        res.status(500).json({error: 'Error posting to database', err});
+      })
+  });
+
+    
 
 // * order by episode.
 // * populate character information.
