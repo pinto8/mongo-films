@@ -53,7 +53,7 @@ router
           if (vehicles !== null) {
             res.status(200).json(vehicles);
           } else {
-            res.status(404).json({error: 'There are no vehicles with that character.' })
+            res.status(404).json({error: 'There are no vehicles associated with that character.' })
           }
         })
         .catch( err => {
