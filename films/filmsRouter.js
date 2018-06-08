@@ -15,21 +15,19 @@ router
       .select('episode title planets characters producer release_date')
       .populate('characters', `_id name gender height skin_color hair_color eye_color`)
       .populate('planets', `name climate terrain gravity diameter`)
-      if (producer !== undefined) {
-        const producerFilter = new RegExp(producer, 'i')
-        query.where({ producer: producerFilter })
-      }
-      if (released !== undefined) {
-        query.where({ release_date: { $regex: released, $options: 'i' }})
-      } else {
+    if (producer !== undefined) {
+      const producerFilter = new RegExp(producer, 'i')
+      query.where({ producer: producerFilter })
+    }
+    if (released !== undefined) {
+      query.where({ release_date: { $regex: released, $options: 'i' }})
+    }
     query.then( films => {
-      console.log(Film);
       res.status(200).json(films);
     })
     query.catch( err => {
       res.status(500).json({ error: 'Error getting films', err});
     })
-    }
   });
 
 // * order by episode.
